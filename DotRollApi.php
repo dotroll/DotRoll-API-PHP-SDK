@@ -43,9 +43,11 @@ class DotRollApi {
 	public function __construct($userName, $password, $apiKey, $useSandBox = true) {
 		$this->selfTest();
 		$this->httpClient = new HTTP_Client();
-		$this->userName = $userName;
-		$this->password = $password;
-		$this->apiKey   = $apiKey;
+		$this->userName   = $userName;
+		$this->password   = $password;
+		$this->apiKey     = $apiKey;
+		$this->useSandBox = $useSandBox;
+		$this->apiVersion = $useSandBox?'sandbox':self::API_VERSION;
 	}
 
 	/**
@@ -56,7 +58,7 @@ class DotRollApi {
 	public function get($uri) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.self::API_VERSION.'/'.$uri,
+			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_GET
 		);
 		$request->setAuth($this->userName, $this->password);
@@ -73,7 +75,7 @@ class DotRollApi {
 	public function delete($uri) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.self::API_VERSION.'/'.$uri,
+			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_DELETE
 		);
 		$request->setAuth($this->userName, $this->password);
@@ -89,7 +91,7 @@ class DotRollApi {
 	public function post($uri, $data) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.self::API_VERSION.'/'.$uri,
+			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_POST
 		);
 		$request->setAuth($this->userName, $this->password);
@@ -107,7 +109,7 @@ class DotRollApi {
 	public function put($uri, $data) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.self::API_VERSION.'/'.$uri,
+			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_POST
 		);
 		$request->setAuth($this->userName, $this->password);
@@ -153,6 +155,13 @@ class DotRollApi {
 	}
 
 	/**
+	 * Get list of all the domains owned by the user
+	 */
+	public function getDomainList() {
+		return $this->get('domain/list/');
+	}
+
+	/**
 	 * Create a new domain contact
 	 *
 	 * @param string $firstName
@@ -192,6 +201,7 @@ class DotRollApi {
 		$orgLongName,
 		$domainPartnerType,
 		$addressName,
+		$addressCountry,
 		$addressState,
 		$addressLocality,
 		$addressPostalCode,
@@ -212,6 +222,7 @@ class DotRollApi {
 			'registryNumber'    => $registryNumber,
 			'orgLongName'       => $orgLongName,
 			'domainPartnerType' => $domainPartnerType,
+			'country'           => $addressCountry,
 			'state'             => $addressState,
 			'locality'          => $addressLocality,
 			'postalCode'        => $addressPostalCode,
@@ -238,10 +249,14 @@ class DotRollApi {
 	 * @param string  $nameserver1    Nameserver 1 (if empty, default dotrol ns will be used)
 	 * @param string  $nameserver2    Nameserver 2 (if empty, default dotrol ns will be used)
 	 * @param boolean $priority       Priority registration (for .hu domains only)
+	 *
+	 * @return integer | boolean The id of the domain that was registered on
+	 *                           success, false on failure
 	 */
 	public function registerDomain(
 		$domainName,
 		$ownerContactId,
+		$adminContactId,
 		$techContactId,
 		$years,
 		$nameserver1 = null,
@@ -342,5 +357,18 @@ class DotRollApi {
 	 */
 	protected $apiKey;
 
+	/**
+	 * Use API in sandbox or production mode
+	 * (true = sandbox mode, false = production mode)
+	 *
+	 * @var boolean $useSandBox
+	 */
+	protected $useSandBox;
 
+	/**
+	 * The API version to use ("sandbox" in sandbox mode)
+	 *
+	 * @var string $apiVersion
+	 */
+	protected $apiVersion;
 }

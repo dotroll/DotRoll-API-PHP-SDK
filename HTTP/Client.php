@@ -14,7 +14,6 @@
  *
  * @copyright Copyright (c) 2010 Dotroll Kft. (http://www.dotroll.com)
  * @author Siegl Zoltan <siegl.zoltan@dotroll.com>
- *
  */
 class HTTP_Client {
 	/**
