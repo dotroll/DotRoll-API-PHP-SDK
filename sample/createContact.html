@@ -1,0 +1,291 @@
+<html>
+	<head>
+		<title>DotRoll API Sample Application - Kapcsolattartó létrehozása</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<img src="/dotroll/sample/dotroll_logo.jpg"/>
+		<p>Ez egy példa jellegű alkalmazás a PHP SDK könnyebb megérthetősége érdekében.</p>
+		<div>
+			<ul>
+				<li><a href="/dotroll/sample/createContact.html">Kapcsolattartó létrehozása</a></li>
+				<li><a href="/dotroll/sample/domainRegistration.html">Domain regisztráció</a></li>
+				<li><a href="/dotroll/sample/domainSearch.html">Domain keresés</a></li>
+				<li><a href="/dotroll/sample/pricesList.html">Árak listázása</a></li>
+				<li><a href="/manual/api.html" target="_blank">DotRoll API Manual</a></li>
+			</ul>
+		</div>
+		<h3>Tulajdonos</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=createContact" method="post" name="orgContact" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>Típus: </td>
+						<td>
+							<select name="isOrganisation">
+								<option value="0">Magánszemély</option>
+								<option value="1">Cég</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Vezetéknév: </td>
+						<td><input type="text" name="lastName"/></td>
+					</tr>
+					<tr>
+						<td>Keresztnév: </td>
+						<td><input type="text" name="firstName"/></td>
+					</tr>
+					<tr>
+						<td>Személyi igazolvány szám: </td>
+						<td><input type="text" name="identity"/> </td>
+					</tr>
+					<tr>
+						<td>Cégnév: </td>
+						<td><input type="text" name="orgName"/> </td>
+					</tr>
+					<tr>
+						<td>Cég teljes neve: </td>
+						<td><input type="text" name="orgLongName"/> </td>
+					</tr>
+					<tr>
+						<td>Cégjegyzékszám: </td>
+						<td><input type="text" name="registryNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég Adószáma: </td>
+						<td><input type="text" name="vatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég EU-s adószám: </td>
+						<td><input type="text" name="euVatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Megye/Állam:</td>
+						<td><input type="text" name="state"/></td>
+					</tr>
+					<tr>
+						<td>Irányítószám: </td>
+						<td><input type="text" name="postalCode"/></td>
+					</tr>
+					<tr>
+						<td>Település: </td>
+						<td><input type="text" name="city"/></td>
+					</tr>
+					<tr>
+						<td>Utca: </td>
+						<td><input type="text" name="street"/></td>
+					</tr>
+					<tr>
+						<td>Házszám: </td>
+						<td><input type="text" name="streetNumber"/></td>
+					</tr>
+					<tr>
+						<td>Ország: </td>
+						<td>
+							<select name="country">
+								<option value="HU">Magyarország</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Telefonszám: </td>
+						<td><input type="text" name="phone"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Fax: </td>
+						<td><input type="text" name="fax"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Email: </td>
+						<td><input type="text" name="email"/></td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="orgContact" value="Mentés"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+		<h3>Adminisztratív kapcsolat tartó</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=createContact" method="post" name="adminContact" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>Típus: </td>
+						<td>
+							<select name="isOrganisation">
+								<option value="0">Magánszemély</option>
+								<option value="1">Cég</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Vezetéknév: </td>
+						<td><input type="text" name="lastName"/></td>
+					</tr>
+					<tr>
+						<td>Keresztnév: </td>
+						<td><input type="text" name="firstName"/></td>
+					</tr>
+					<tr>
+						<td>Cégnév: </td>
+						<td><input type="text" name="orgName"/> </td>
+					</tr>
+					<tr>
+						<td>Cég teljes neve: </td>
+						<td><input type="text" name="orgLongName"/> </td>
+					</tr>
+					<tr>
+						<td>Cégjegyzékszám: </td>
+						<td><input type="text" name="registryNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég Adószáma: </td>
+						<td><input type="text" name="vatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég EU-s adószám: </td>
+						<td><input type="text" name="euVatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Megye/Állam:</td>
+						<td><input type="text" name="state"/></td>
+					</tr>
+					<tr>
+						<td>Irányítószám: </td>
+						<td><input type="text" name="postalCode"/></td>
+					</tr>
+					<tr>
+						<td>Település: </td>
+						<td><input type="text" name="city"/></td>
+					</tr>
+					<tr>
+						<td>Utca: </td>
+						<td><input type="text" name="street"/></td>
+					</tr>
+					<tr>
+						<td>Házszám: </td>
+						<td><input type="text" name="streetNumber"/></td>
+					</tr>
+					<tr>
+						<td>
+							Ország:
+								<select name="country">
+									<option value="HU">Magyarország</option>
+								</select>
+							
+						</td>
+					</tr>
+					<tr>
+						<td>Telefonszám: </td>
+						<td><input type="text" name="phone"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Fax: </td>
+						<td><input type="text" name="fax"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Email: </td>
+						<td><input type="text" name="email"/></td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="adminContact" value="Mentés"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+		<h3>Technikai kapcsolat tartó</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=createContact" method="post" name="techContact" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>Típus: </td>
+						<td>
+							<select name="isOrganisation">
+								<option value="0">Magánszemély</option>
+								<option value="1">Cég</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Vezetéknév: </td>
+						<td><input type="text" name="lastName"/></td>
+					</tr>
+					<tr>
+						<td>Keresztnév: </td>
+						<td><input type="text" name="firstName"/></td>
+					</tr>
+					<tr>
+						<td>Cégnév: </td>
+						<td><input type="text" name="orgName"/> </td>
+					</tr>
+					<tr>
+						<td>Cég teljes neve: </td>
+						<td><input type="text" name="orgLongName"/> </td>
+					</tr>
+					<tr>
+						<td>Cégjegyzékszám: </td>
+						<td><input type="text" name="registryNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég Adószáma: </td>
+						<td><input type="text" name="vatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Cég EU-s adószám: </td>
+						<td><input type="text" name="euVatNumber"/> </td>
+					</tr>
+					<tr>
+						<td>Megye/Állam:</td>
+						<td><input type="text" name="state"/></td>
+					</tr>
+					<tr>
+						<td>Irányítószám:</td>
+						<td><input type="text" name="postalCode"/></td>
+					</tr>
+					<tr>
+						<td>Település: </td>
+						<td><input type="text" name="city"/></td>
+					</tr>
+					<tr>
+						<td>Utca: </td>
+						<td><input type="text" name="street"/></td>
+					</tr>
+					<tr>
+						<td>Házszám: </td>
+						<td><input type="text" name="streetNumber"/></td>
+					</tr>
+					<tr>
+						<td>Ország: </td>
+						<td>
+							<select name="country">
+								<option value="HU">Magyarország</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Telefonszám: </td>
+						<td><input type="text" name="phone"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Fax: </td>
+						<td><input type="text" name="fax"/> +36-22-555-3598</td>
+					</tr>
+					<tr>
+						<td>Email: </td>
+						<td><input type="text" name="email"/></td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="techContact" value="Mentés"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</body>
+</html>

@@ -150,6 +150,8 @@ class HTTP_Client_Request {
 			//if (is_array($value)) $value = urldecode(http_build_query(array($key => $value)));
 			if (is_array($value)) {
 				$this->params[(string)$key] = $value;
+			} elseif (is_object($value)) {
+				$this->params[(string)$key] = get_object_vars($value);
 			} else {
 				$this->params[(string)$key] = (string)$value;
 			}

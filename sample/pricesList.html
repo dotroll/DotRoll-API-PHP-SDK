@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>DotRoll API Sample Application - Árak listázása</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<img src="/dotroll/sample/dotroll_logo.jpg"/>
+		<p>Ez egy példa jellegű alkalmazás a PHP SDK könnyebb megérthetősége érdekében.</p>
+		<div>
+			<ul>
+				<li><a href="/dotroll/sample/createContact.html">Kapcsolattartó létrehozása</a></li>
+				<li><a href="/dotroll/sample/domainRegistration.html">Domain regisztráció</a></li>
+				<li><a href="/dotroll/sample/domainSearch.html">Domain keresés</a></li>
+				<li><a href="/dotroll/sample/pricesList.html">Árak listázása</a></li>
+				<li><a href="/manual/api.html" target="_blank">DotRoll API Manual</a></li>
+			</ul>
+		</div>
+		<h3>Domain Árak</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=pricesList" method="post" name="domainPrice" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<label>Pénznem:
+								<select name="currency">
+									<option value="HUF">HUF</option>
+									<option value="EUR">EUR</option>
+									<option value="USD">USD</option>
+								</select>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="domain" value="Listázz"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+		<h3>Hosting Árak</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=pricesList" method="post" name="hostingPrice" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<label>Pénznem:
+								<select name="currency">
+									<option value="HUF">HUF</option>
+									<option value="EUR">EUR</option>
+									<option value="USD">USD</option>
+								</select>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="hosting" value="Listázz"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+		<h3>VPS Árak</h3>
+		<div>
+			<form action="/dotroll/sample/example.php?method=pricesList" method="post" name="vpsPrice" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<label>Pénznem:
+								<select name="currency">
+									<option value="HUF">HUF</option>
+									<option value="EUR">EUR</option>
+									<option value="USD">USD</option>
+								</select>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="vps" value="Listázz"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</body>
+</html>

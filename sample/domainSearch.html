@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>DotRoll API Sample Application - Domain Keresés</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<img src="/dotroll/sample/dotroll_logo.jpg"/>
+		<p>Ez egy példa jellegű alkalmazás a PHP SDK könnyebb megérthetősége érdekében.</p>
+		<div>
+			<ul>
+				<li><a href="/dotroll/sample/createContact.html">Kapcsolattartó létrehozása</a></li>
+				<li><a href="/dotroll/sample/domainRegistration.html">Domain regisztráció</a></li>
+				<li><a href="/dotroll/sample/domainSearch.html">Domain keresés</a></li>
+				<li><a href="/dotroll/sample/pricesList.html">Árak listázása</a></li>
+				<li><a href="/manual/api.html" target="_blank">DotRoll API Manual</a></li>
+			</ul>
+		</div>
+		<div>
+			<form action="/dotroll/sample/example.php?method=domainSearch" method="post" name="domainSearch" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td><label>Domain név: <input type="text" name="domainName"/></label></td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="search" value="Keresés"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</body>
+</html>

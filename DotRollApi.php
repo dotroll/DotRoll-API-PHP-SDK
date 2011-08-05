@@ -10,12 +10,12 @@
  * @author Zoltan Siegl <siegl.zoltan@dotroll.com>
  */
 
-require('./HTTP/Client.php');
-require('./HTTP/Client/ClientException.php');
-require('./HTTP/Client/Request.php');
-require('./HTTP/Client/Response.php');
-require('./HTTP/Client/Backend/BackendInterface.php');
-require('./HTTP/Client/Backend/Curl.php');
+require('HTTP/Client.php');
+require('HTTP/Client/ClientException.php');
+require('HTTP/Client/Request.php');
+require('HTTP/Client/Response.php');
+require('HTTP/Client/Backend/BackendInterface.php');
+require('HTTP/Client/Backend/Curl.php');
 
 /**
  * DotRoll API class
@@ -47,7 +47,8 @@ class DotRollApi {
 		$this->password   = $password;
 		$this->apiKey     = $apiKey;
 		$this->useSandBox = $useSandBox;
-		$this->apiVersion = $useSandBox?'sandbox':self::API_VERSION;
+		$this->apiVersion = $useSandBox === true?'sandbox':self::API_VERSION;
+		$this->apiUrl     = isset($_ENV['API_URL'])?$_ENV['API_URL']:self::API_URL;
 	}
 
 	/**
@@ -58,13 +59,14 @@ class DotRollApi {
 	public function get($uri) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
+			$this->apiUrl.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_GET
 		);
 		$request->setAuth($this->userName, $this->password);
 		$request->addParam('api_key', $this->apiKey);
 		$result = $this->httpClient->sendRequest($request);
-		return json_decode($result->getResponseText());
+		$resultObject = json_decode($result->getResponseText());
+		return $resultObject;
 	}
 
 	/**
@@ -75,7 +77,7 @@ class DotRollApi {
 	public function delete($uri) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
+			$this->apiUrl.'/'.$this->apiVersion.'/'.$uri,
 			HTTP_Client_Request::METHOD_DELETE
 		);
 		$request->setAuth($this->userName, $this->password);
@@ -88,17 +90,25 @@ class DotRollApi {
 	 *
 	 * @param string $uri
 	 */
-	public function post($uri, $data) {
+	public function post($uri, $data, $expectedErrorCode = false) {
 		$uri = rtrim($uri, '/');
-		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
-			HTTP_Client_Request::METHOD_POST
-		);
+		if($expectedErrorCode && $this->useSandBox) {
+			$request = new HTTP_Client_Request(
+				$this->apiUrl.'/'.$this->apiVersion.'/'.$uri . '?error=' . $expectedErrorCode,
+				HTTP_Client_Request::METHOD_POST
+			);
+		} else {
+			$request = new HTTP_Client_Request(
+				$this->apiUrl.'/'.$this->apiVersion.'/'.$uri,
+				HTTP_Client_Request::METHOD_POST
+			);
+		}
 		$request->setAuth($this->userName, $this->password);
 		$request->addParams($data);
 		$request->addParam('api_key', $this->apiKey);
 		$result = $this->httpClient->sendRequest($request);
-		return json_decode($result->getResponseText());
+		$resultObject = json_decode($result->getResponseText());
+		return $resultObject;
 	}
 
 	/**
@@ -109,11 +119,12 @@ class DotRollApi {
 	public function put($uri, $data) {
 		$uri = rtrim($uri, '/');
 		$request = new HTTP_Client_Request(
-			self::API_URL.'/'.$this->apiVersion.'/'.$uri,
-			HTTP_Client_Request::METHOD_POST
+			$this->apiUrl.'/'.$this->apiVersion.'/'.$uri,
+			HTTP_Client_Request::METHOD_PUT
 		);
 		$request->setAuth($this->userName, $this->password);
 		$request->addParams($data);
+		$request->addParam('api_key', $this->apiKey);
 		$result = $this->httpClient->sendRequest($request);
 		return json_decode($result->getResponseText());
 	}
@@ -201,7 +212,7 @@ class DotRollApi {
 		$orgLongName,
 		$domainPartnerType,
 		$addressName,
-		$addressCountry,
+		$addressCountry, 
 		$addressState,
 		$addressLocality,
 		$addressPostalCode,
@@ -211,6 +222,7 @@ class DotRollApi {
 		$phone,
 		$fax
 	) {
+
 		$data = array(
 			'firstName'         => $firstName,
 			'lastName'          => $lastName,
@@ -248,7 +260,7 @@ class DotRollApi {
 	 * @param integer $years          The term in years to register domain for
 	 * @param string  $nameserver1    Nameserver 1 (if empty, default dotrol ns will be used)
 	 * @param string  $nameserver2    Nameserver 2 (if empty, default dotrol ns will be used)
-	 * @param boolean $priority       Priority registration (for .hu domains only)
+	 * @param boolean $expectedErrorCode In SandBox mode, you can set an expected error code.
 	 *
 	 * @return integer | boolean The id of the domain that was registered on
 	 *                           success, false on failure
@@ -261,20 +273,24 @@ class DotRollApi {
 		$years,
 		$nameserver1 = null,
 		$nameserver2 = null,
-		$priority = false
+		$expectedErrorCode = false
 	) {
 		$data = array(
 			'ownerContactId' => $ownerContactId,
+			'adminContactId' => $adminContactId,
 			'techContactId'  => $techContactId,
 			'years'          => $years,
-			'ns1'            => $nameserver1 = null,
-			'ns2'            => $nameserver2 = null,
-			'priority'       => $priority = false
+			'ns1'            => $nameserver1 = 'ns1.dotroll.com',
+			'ns2'            => $nameserver2 = 'ns2.dotroll.com'
 		);
-		return $this->post('domain/'.$domainName, $data);
+		if ($this->useSandBox === true && $expectedErrorCode !== false) {
+			$data['expectedErrorCode'] = $expectedErrorCode;
+		}
+		$response = $this->post('domain/'.$domainName, $data);
+		return $response;
 	}
 
-
+	
 	/**
 	 * Test if every needed PHP extension is installed
 	 */
@@ -298,7 +314,7 @@ class DotRollApi {
 	 * DotRoll REST API base URL
 	 * @var string API_URL
 	 */
-	const API_URL = 'http://webservices.dotroll.com/rest';
+	const API_URL = 'https://webservices.dotroll.com/rest';
 
 	/**
 	 * Domain-partner kapcsolat típus: HUREG tulaj
@@ -309,7 +325,7 @@ class DotRollApi {
 	 */
 	const DOMAIN_PARTNER_TYPE_HUREG_CONTACT=2;
 	/**
-	 * Domain-partner kapcsolat típus: COMREG kontakt
+	 * Domain-partner kapcsolat típus: COMREG kontakt .info,.biz
 	 */
 	const DOMAIN_PARTNER_TYPE_COMREG_CONTACT=3;
 	/**
@@ -321,11 +337,11 @@ class DotRollApi {
 	 */
 	const DOMAIN_PARTNER_TYPE_EUREG_CONTACT=5;
 	/**
-	 * Domain-partner kapcsolat típus: HUREG tulaj
+	 * Domain-partner kapcsolat típus: HUREG tulaj .info, .biz
 	 */
 	const DOMAIN_PARTNER_TYPE_COMREG_OWNER=6;
 	/**
-	 * COMNET kontakt
+	 * COMNET kontakt .com, .net
 	 */
 	const DOMAIN_PARTNER_TYPE_VERISIGN_CONTACT=7;
 	/**

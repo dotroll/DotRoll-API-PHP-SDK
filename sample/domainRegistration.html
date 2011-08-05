@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>DotRoll API Sample Application - Domain Regisztráció</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<img src="/dotroll/sample/dotroll_logo.jpg"/>
+		<p>Ez egy példa jellegű alkalmazás a PHP SDK könnyebb megérthetősége érdekében.</p>
+		<div>
+			<ul>
+				<li><a href="/dotroll/sample/createContact.html">Kapcsolattartó létrehozása</a></li>
+				<li><a href="/dotroll/sample/domainRegistration.html">Domain regisztráció</a></li>
+				<li><a href="/dotroll/sample/domainSearch.html">Domain keresés</a></li>
+				<li><a href="/dotroll/sample/pricesList.html">Árak listázása</a></li>
+				<li><a href="/manual/api.html" target="_blank">DotRoll API Manual</a></li>
+			</ul>
+		</div>
+		<div>
+			<form action="/dotroll/sample/example.php?method=domainRegistration" method="post" name="orgContact" target="_blank">
+			<table>
+				<tbody>
+					<tr>
+						<td>Domain név: </td>
+						<td><input type="text" name="domainName"/></td>
+					</tr>
+					<tr>
+						<td>Évek: </td>
+						<td><input type="text" name="years"/></td>
+					</tr>
+					<tr>
+						<td>Tulajdonos contact id: </td>
+						<td><input type="text" name="ownerContactId"/></td>
+					</tr>
+					<tr>
+						<td>Admin contact id: </td>
+						<td><input type="text" name="adminContactId"/> </td>
+					</tr>
+					<tr>
+						<td>Tech contact id: </td>
+						<td><input type="text" name="techContactId"/> </td>
+					</tr>
+					<tr>
+						<td align="center"><input type="submit" name="registration" value="Mentés"/></td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</body>
+</html>
