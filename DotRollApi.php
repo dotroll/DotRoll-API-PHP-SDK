@@ -271,8 +271,8 @@ class DotRollApi {
 		$adminContactId,
 		$techContactId,
 		$years,
-		$nameserver1 = null,
-		$nameserver2 = null,
+		$nameserver1 = 'ns1.dotroll.com',
+		$nameserver2 = 'ns2.dotroll.com',
 		$expectedErrorCode = false
 	) {
 		$data = array(
@@ -280,8 +280,8 @@ class DotRollApi {
 			'adminContactId' => $adminContactId,
 			'techContactId'  => $techContactId,
 			'years'          => $years,
-			'ns1'            => $nameserver1 = 'ns1.dotroll.com',
-			'ns2'            => $nameserver2 = 'ns2.dotroll.com'
+			'ns1'            => $nameserver1,
+			'ns2'            => $nameserver2
 		);
 		if ($this->useSandBox === true && $expectedErrorCode !== false) {
 			$data['expectedErrorCode'] = $expectedErrorCode;
