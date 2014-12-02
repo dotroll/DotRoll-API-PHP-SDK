@@ -166,7 +166,6 @@ class HTTP_Client_Backend_Curl implements HTTP_Client_Backend_BackendInterface{
 
 		//set https if needed
 		if ($request->getHttps()) {
-			curl_setopt($curlResource, CURLOPT_SSLVERSION,3);
 			curl_setopt($curlResource, CURLOPT_SSL_VERIFYPEER, FALSE);
 			curl_setopt($curlResource, CURLOPT_SSL_VERIFYHOST, 2);
 		}
